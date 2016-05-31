@@ -5,21 +5,23 @@ $(document).ready(function() {
   // Compile the template
   var theTemplate = Handlebars.compile(theTemplateScript);
 
-  // Define our data object
-  var context = {
-    students: [
-      { name: 'Homer'},
-      { name: 'Peter'},
-      { name: 'Eric'},
-      { name: 'Kenny'},
-      { name: 'Bart'}
-    ],
-  };
+  var request = $.ajax({
+    url: "http://localhost:3000/cohorts/1",
+    method: "GET"
+  });
 
-  // Pass our data to the template
-  var theCompiledHtml = theTemplate(context);
+  var context = {};
 
-  // Add the compiled html to the page
-  $('.content-placeholder').html(theCompiledHtml);
+  request.done(function(response) {
+    console.log(response);
+    context.students = response;
+    console.log(context);
+    // Pass our data to the template
+    var theCompiledHtml = theTemplate(context);
+
+    // Add the compiled html to the page
+    $('.content-placeholder').html(theCompiledHtml);
+  });
+
 });
 
