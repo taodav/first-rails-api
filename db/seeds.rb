@@ -18,8 +18,17 @@ cohorts.each do |cohort|
   end
 end
 
+20.times do
+  User.create()
+end
 Student.all.each do |student|
   rand(5..7).times do
     Badge.create(content: "Hello there", student: student)
+  end
+end
+
+Badge.all.each do |badge|
+  rand(1..9).times do
+    Vote.create(vote_type: 1, badge: badge, user: User.all.sample)
   end
 end
