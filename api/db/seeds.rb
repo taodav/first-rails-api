@@ -29,6 +29,6 @@ end
 
 Badge.all.each do |badge|
   rand(1..9).times do
-    Vote.create(vote_type: 1, badge: badge, user: User.all.sample)
+    Vote.create(vote_type: [1, -1].sample, badge: badge, user: User.all.sample)
   end
 end
