@@ -18,9 +18,12 @@ ActiveRecord::Schema.define(version: 20160531170446) do
 
   create_table "badges", force: :cascade do |t|
     t.string   "content"
+    t.integer  "student_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "badges", ["student_id"], name: "index_badges_on_student_id", using: :btree
 
   create_table "cohorts", force: :cascade do |t|
     t.string   "name"
@@ -53,6 +56,7 @@ ActiveRecord::Schema.define(version: 20160531170446) do
   add_index "votes", ["badge_id"], name: "index_votes_on_badge_id", using: :btree
   add_index "votes", ["user_id"], name: "index_votes_on_user_id", using: :btree
 
+  add_foreign_key "badges", "students"
   add_foreign_key "students", "cohorts"
   add_foreign_key "votes", "badges"
   add_foreign_key "votes", "users"
