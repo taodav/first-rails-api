@@ -5,3 +5,14 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Student.delete_all
+Cohort.delete_all
+
+cohorts = ["Fiery Skippers", "Rock Doves", "Pocket Gophers"]
+cohorts.each do |cohort|
+  c = Cohort.create(name: cohort)
+  rand(5..10).times do
+    c.students.create(name: "Student #" + rand(1..2000).to_s)
+  end
+end
