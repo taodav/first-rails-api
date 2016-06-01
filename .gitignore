@@ -13,4 +13,4 @@
 /tmp
 .DS_Store
 api/tmp/
-api/log/
+api/log/*
