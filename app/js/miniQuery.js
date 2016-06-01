@@ -45,7 +45,12 @@ var finder = (function(){
         return document.getElementById(id)
       } else if (selector.includes('.')) {
         var klass = selector.replace(/\S*[.]/g, '')
-        return document.getElementsByClassName(klass)[0]
+        var element = document.getElementsByClassName(klass)
+        if (element.length == 1){
+          return element[0]
+        } else {
+          return element
+        }
         // var matching = new Array
         // for (var i = 0; i<element.length; i++){
         //   if (element[i].className == klass) {
@@ -82,6 +87,7 @@ function minQuery(element){
         }
       } else {
         for (var i = 0; i<this.element.length; i++){
+          //console.log(this.element[i])
           this.element[i].addEventListener(args[0], args[1])
         }
       }
@@ -173,7 +179,7 @@ var $ = function(selector) {
 
 $.ajax = function(http){
   var promise = new Promise( function(resolve, reject){
-    var req = makeCorsRequest(http.method, http.url)
+    var req = makeCorsRequest(http.method, http.url, http.data)
 
     req.onload = function() {
       if (this.status >= 200 && this.status < 300){
@@ -193,9 +199,13 @@ $.ajax = function(http){
 
 function createCORSRequest(method, url) {
   var xhr = new XMLHttpRequest();
+
   if ("withCredentials" in xhr) {
     // XHR for Chrome/Firefox/Opera/Safari.
     xhr.open(method, url, true);
+    if (method === 'post') {
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+    }
   } else if (typeof XDomainRequest != "undefined") {
     // XDomainRequest for IE.
     xhr = new XDomainRequest();
@@ -209,7 +219,7 @@ function createCORSRequest(method, url) {
 function getTitle(text) {
   return text.match('<title>(.*)?</title>')[1];
 }
-function makeCorsRequest(method, url) {
+function makeCorsRequest(method, url, data) {
   // All HTML5 Rocks properties support CORS.
 
   var xhr = createCORSRequest(method, url);
@@ -228,8 +238,8 @@ function makeCorsRequest(method, url) {
   // xhr.onerror = function() {
   //   alert('Woops, there was an error making the request.');
   // };
-
-  xhr.send();
+  console.log(data)
+  xhr.send(data);
   return xhr
 }
 
