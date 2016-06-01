@@ -14,19 +14,19 @@ var finder = (function(){
         return element = selector
       } else {
         if (findElement(selector)){
-          element = findElement(selector)
+          // console.log(selector)
+          return findElement(selector)
         }
-        console.log(findAttr(selector))
         return findAttr(selector)
-        return element
+        // return element
       }
     }
   }
 
     function findElement(selector){
-      if (selector.charAt(0) !== '.' || selector.charAt(0) !== '#') {
-        // console.log(selector)
+      if (selector.charAt(0) !== '.' && selector.charAt(0) !== '#' ) {
         var tag = selector.replace(/[.].*|[#].*/g, '')
+        console.log(document.getElementsByTagName(tag))
         return document.getElementsByTagName(tag)
       } else {
         return false
@@ -54,7 +54,7 @@ var finder = (function(){
         // }
         // element = matching
       } else {
-        element = document.getElementsByTagName(selector)[0]
+        element = document.getElementsByTagName(selector)
       }
     }
 
@@ -64,13 +64,30 @@ var finder = (function(){
 function minQuery(element){
   this.element = element
   return {
+    element: this.element,
     hide: () => this.element.style.display = 'none',
     show: () => this.element.style.display = "initial",
     addClass: (className) => this.element.setAttribute('class', className),
     removeClass: (className) => this.element.removeAttribute('class', className),
-    on: () => this.element.addEventListener(arguments[0], arguments[1]),
-    trigger: () => {
-                    var event = new Event(arguments[0]);
+    on: (...args) => {
+      if (args[2]){
+        var children = this.element.children
+        for (var i = 0; i<children.length; i++) {
+          console.log(children[i].tagName)
+          // console.log(args[1].toUpperCase())
+          if (children[i].tagName == args[1].toUpperCase()){
+            console.log("BLAHBLAHBLAH")
+            return children[i].addEventListener(args[0], args[2])
+          }
+        }
+      } else {
+        for (var i = 0; i<this.element.length; i++){
+          this.element[i].addEventListener(args[0], args[1])
+        }
+      }
+    },
+    trigger: (event) => {
+                    var event = new Event(event);
                     this.element.dispatchEvent(event)
                     },
     ready: (callback) => {
@@ -88,7 +105,8 @@ function minQuery(element){
         // console.log(this.element)
         return this.element.innerHTML
       }
-    }
+    },
+    attr: (attribute) => {return this.element.getAttribute(attribute)}
   }
 }
 var $ = function(selector) {
