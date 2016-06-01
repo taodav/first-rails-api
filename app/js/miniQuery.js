@@ -26,7 +26,7 @@ var finder = (function(){
     function findElement(selector){
       if (selector.charAt(0) !== '.' && selector.charAt(0) !== '#' ) {
         var tag = selector.replace(/[.].*|[#].*/g, '')
-        console.log(document.getElementsByTagName(tag))
+        // console.log(document.getElementsByTagName(tag))
         return document.getElementsByTagName(tag)
       } else {
         return false
@@ -73,7 +73,7 @@ function minQuery(element){
       if (args[2]){
         var children = this.element.children
         for (var i = 0; i<children.length; i++) {
-          console.log(children[i].tagName)
+          // console.log(children[i].tagName)
           // console.log(args[1].toUpperCase())
           if (children[i].tagName == args[1].toUpperCase()){
             console.log("BLAHBLAHBLAH")
