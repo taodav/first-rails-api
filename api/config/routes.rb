@@ -16,6 +16,11 @@ Rails.application.routes.draw do
 
   resources :cohorts
   resources :students
+  resources :badges do
+    member do
+      post '/vote' => 'badges#vote'
+    end
+  end
 
   # Example resource route with options:
   #   resources :products do
