@@ -16,14 +16,14 @@
       </div>
 
     {{/each}}
-    <div class="voteForm" id="voteForm">
-      <form id="upvoteForm" class="upvoteForm" method="post">
+    <div class="voteFormDiv" id="voteForm">
+      <form id="upvoteForm" class="voteForm" method="post">
         <input type="hidden" name="vote[vote_type]" value="1">
         <input type="hidden" name="vote[user]" value="">
         <input type="submit" value="up">
       </form>
 
-      <form id="downvoteForm" class="downvoteForm" method="post">
+      <form id="downvoteForm" class="voteForm" method="post">
         <input type="hidden" name="vote[vote_type]" value="-1">
         <input type="hidden" name="vote[user]" value="">
         <input type="submit" value="down">
